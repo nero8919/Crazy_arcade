@@ -18,47 +18,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-typedef struct Entity Entity;
+#include "util.h"
 
-typedef struct {
-	void (*logic)(void);
-	void (*draw)(void);
-} Delegate;
+int collision(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
+{
+	return (MAX(x1, x2) < MIN(x1 + w1, x2 + w2)) && (MAX(y1, y2) < MIN(y1 + h1, y2 + h2));
+}
+/*
+void calcSlope(int x1, int y1, int x2, int y2, float *dx, float *dy)
+{
+	int steps = MAX(abs(x1 - x2), abs(y1 - y2));
 
-typedef struct {
-	SDL_Renderer *renderer;
-	SDL_Window *window;
-	Delegate delegate;
-	int keyboard[MAX_KEYBOARD_KEYS];
-	int mouse;	//mouse up 1 down 0 
-} App;
+	if (steps == 0)
+	{
+		*dx = *dy = 0;
+		return;
+	}
 
-struct Entity {
-	float x;
-	float y;
-	int w;
-	int h;
-	float dx;
-	float dy;
-	int health;
-	int reload;
-	int side;
-	SDL_Texture *texture;
-	Entity *next;
-};
+	*dx = (x1 - x2);
+	*dx /= steps;
 
-typedef struct {
-	Entity fighterHead, *fighterTail;
-	Entity bulletHead, *bulletTail;
-	Entity pointsHead, *pointsTail;
-} Stage;
+	*dy = (y1 - y2);
+	*dy /= steps;
+}
+*/
 
-typedef struct {
-
-	int speed; 
-	int bombNum;
-	int bombPower;
-
-
-} CharictarStats;
 

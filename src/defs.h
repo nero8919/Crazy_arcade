@@ -24,16 +24,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SIDE_PLAYER 0
 
 
-#define SCALE 1.2
+#define SCALE 1.0
 
 
 #define SCREEN_WIDTH   1040*SCALE
 #define SCREEN_HEIGHT  780 *SCALE
 
-#define MAP_WIDTH   937
-#define MAP_HEIGHT  815
-#define MAP_X   31
-#define MAP_Y   63
+#define MAP_WIDTH   780*SCALE
+#define MAP_HEIGHT  680*SCALE
+#define MAP_X   26*SCALE
+#define MAP_Y   53*SCALE
 
 
 #define START_LOGO_X 380*SCALE
@@ -46,3 +46,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define FPS 60
 
+#define mapTileX 15
+#define mapTileY 15
+
+#define characterPNGsize 7
+
+
+
+enum BoxNumber {
+    BOXTYPE1 ,
+    BOXTYPE2 ,
+    MAPTILENUM 
+    
+};
+
+enum ItemType{
+    ITEMSKATE,
+    ITEMBALLON,
+    ITEMPOTION,
+    ITEMPOWERMAX,
+    ITEMNUM
+
+};
+
+enum Sequence{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    INIT,
+    HOLD=99
+
+};

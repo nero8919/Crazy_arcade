@@ -20,6 +20,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "draw.h"
 
+
+
+
 void prepareScene(void)
 {
 	SDL_SetRenderDrawColor(app.renderer, 32, 32, 32, 255);
@@ -64,4 +67,25 @@ void blitRect(SDL_Texture *texture, SDL_Rect *src, int x, int y)
 	dest.h = src->h;
 	
 	SDL_RenderCopy(app.renderer, texture, src, &dest);
+}
+
+void moveani(SDL_Texture *texture, int x, int y ,int step,int pngSize)
+{
+	
+	SDL_Rect dst,src;
+	
+	dst.x = x;
+	dst.y = y;
+
+	SDL_QueryTexture(texture, NULL, NULL, &src.w, &src.h);
+
+	dst.w=src.w/pngSize;
+	dst.h=src.h;
+	src.x=(src.w/pngSize)*step;
+	src.y = 0;
+	src.w=src.w/pngSize;
+	
+	SDL_RenderCopy(app.renderer, texture, &src, &dst);
+
+	
 }

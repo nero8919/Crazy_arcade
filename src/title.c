@@ -26,16 +26,19 @@ static void draw(void);
 static void drawStartScene(void);
 static void drawStartLogo(void);
 static int checkingbox(SDL_Texture *texture ,SDL_MouseButtonEvent *event);
-
+static void mapChoiceTitle(void);
 
 
 //static SDL_Texture *sdl2Texture;
 static SDL_Texture *startSceneBg;
 static SDL_Texture *startLogo;
 static SDL_Texture *startLogoClick;
+static SDL_Texture *lobbyScene;
+
 static int reveal = 0;
 static int timeout;
 static int startSceneBgX;
+static int lobbySceneX;
 static int click; 
 
 
@@ -49,24 +52,15 @@ void initTitle(void)
 	startLogo = loadTexture("gfx/gamestart.png");
 	startLogoClick = loadTexture("gfx/clickgamestart.png");
 	startSceneBg = loadTexture("gfx/start_scene_bg.png");
-	
+	lobbyScene = loadTexture("gfx/lobby_scene_bg.png");
+
 	timeout = FPS * 5;
 }
 
 
 static void logic(void)
 {
-	/*
-	if (reveal < SCREEN_HEIGHT)
-	{
-		reveal++;
-	}
 	
-	if (--timeout <= 0)
-	{
-		initHighscores();
-	}
-	*/
 	if(app.mouse){
 		//will be give a click effects
 		click =1;
@@ -78,6 +72,11 @@ static void logic(void)
 	}
 }
 
+static void mapChoiceTitle(void)
+{
+
+
+}
 
 static void draw(void)
 {
@@ -113,7 +112,6 @@ static void drawStartScene(void)
 		SDL_RenderCopy(app.renderer, startSceneBg, NULL, &dest);
 	}
 }
-
 
 static void drawStartLogo(void)
 {

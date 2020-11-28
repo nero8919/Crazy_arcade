@@ -21,9 +21,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common.h"
 
 extern void blit(SDL_Texture *texture, int x, int y);
+extern void blitRect(SDL_Texture *texture, SDL_Rect *src, int x, int y);
+
 extern SDL_Texture *loadTexture(char *filename);
 extern int collision(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 extern int bulletHitFighter(Entity *b);
+extern void mapLoad(int numberArray[][15], int mapNumber);
+extern void statusControl(Entity *block );
+extern void moveani(SDL_Texture *texture, int x, int y ,int step, int pngSize);
+
 
 extern App app;
 extern Stage stage;
+

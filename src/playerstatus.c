@@ -30,19 +30,16 @@ void statusControl(Entity *block  )
     switch(block->item.itemType)
     {
         case ITEMSKATE:
-            if(status.speed<10)    status.speed += 1;
+            if(stage.status1.speed<10)    stage.status1.speed += 1;
             break;
         case ITEMPOTION:
-            if(status.bombPower<10) status.bombPower +=1;
+            if(stage.status1.bombPower<10) stage.status1.bombPower +=1;
             break;
         case ITEMBALLON:
-            if(status.bombNum <10)  status.bombNum += 1;
+            if(stage.status1.bombNum <10)  stage.status1.bombNum += 1;
             break;
         case ITEMPOWERMAX:
-            status.bombPower = 10;
-
-
-
+            stage.status1.bombPower = 10;
 
     }
 

@@ -51,6 +51,9 @@ static void doGetItem(void);
 static void chooseMap(void);
 static void clipPlayer(void);
 static void clipPlayerFromBox(void);
+static void drawHud(void);
+static void drawDraw(void);
+
 
 //static int bulletHitItem(Entity *b);
 
@@ -71,16 +74,16 @@ static SDL_Texture *playerrightTexture;
 
 static SDL_Texture *item;
 static SDL_Texture *Box;
-//static Item *item; 
 
 static int itemX;
 static int backgroundX;
 static int map_backgroundX;
-static int mapNumber= 2;
+static int mapNumber= 1;
 static int enemySpawnTimer =0;
 static SDL_Texture *mapBlock[MAPTILENUM];
 static SDL_Texture *itemType[ITEMNUM];
 static int mapArray[15][15];
+static float updateSpeed;
 
 void initStage(void)
 {
@@ -130,6 +133,7 @@ void initStage(void)
 	playerleftTexture = loadTexture("gfx/bazziLeft.png");
 	playerrightTexture = loadTexture("gfx/bazziRight.png");
 
+	stage.time = 120;
 
 }
 
@@ -267,6 +271,8 @@ static void initPlayer(void) //player init
 	SDL_QueryTexture(player->texture, NULL, NULL, &player->w, &player->h);
 	player->direction =INIT;
 	
+	player->w = MAP_WIDTH/15;
+	player->h = MAP_HEIGHT/15*2;
 	
 	//init error occur 
 }
@@ -324,6 +330,7 @@ static void doPlayer(void)
 {
 	
 	player->dx = player->dy = 0;
+	updateSpeed = PLAYER_SPEED + (0.5)*stage.status1.speed;
 	
 	if (player->reload > 0)
 	{
@@ -332,7 +339,7 @@ static void doPlayer(void)
 	
 	if (app.keyboard[SDL_SCANCODE_UP])
 	{
-		player->dy = -PLAYER_SPEED;
+		player->dy = -updateSpeed;
 		if(player->direction !=UP) 
 		{
 			player->texture = playerupTexture;
@@ -342,7 +349,7 @@ static void doPlayer(void)
 	
 	if (app.keyboard[SDL_SCANCODE_DOWN])
 	{
-		player->dy = PLAYER_SPEED;
+		player->dy = updateSpeed;
 		if(player->direction !=DOWN) 
 		{
 			player->texture = playerdownTexture;
@@ -352,7 +359,7 @@ static void doPlayer(void)
 	
 	if (app.keyboard[SDL_SCANCODE_LEFT])
 	{
-		player->dx = -PLAYER_SPEED;
+		player->dx = -updateSpeed;
 		if(player->direction !=LEFT)
 		{
 			player->texture = playerleftTexture;
@@ -362,7 +369,7 @@ static void doPlayer(void)
 	
 	if (app.keyboard[SDL_SCANCODE_RIGHT])
 	{
-		player->dx = PLAYER_SPEED;
+		player->dx = updateSpeed;
 		if(player->direction !=RIGHT) 
 		{
 			player->texture = playerrightTexture;
@@ -403,7 +410,6 @@ static void fireBullet(void)
 	bullet->y = player->y;
 	bullet->dx = PLAYER_BULLET_SPEED;
 	bullet->health = 1;
-	bullet->side = SIDE_PLAYER;
 
 	bullet->texture = bulletTexture;
 	SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet-> w, &bullet-> h);
@@ -497,7 +503,6 @@ static void spawnBlock(int i , int j)
 			block->y = MAP_Y+(MAP_HEIGHT/15)*(j);
 			block->w =MAP_WIDTH/15;
 			block->h =MAP_HEIGHT/15;
-			block->side = 1;
 			block->health = 1;
 
 			rect->w =MAP_WIDTH/15;
@@ -536,35 +541,7 @@ static void doItem(Entity *block)
 
 	SDL_QueryTexture(block->item.texture, NULL, NULL, &block->w, &block->h);
 }
-/*
-static void doItem(void)
-{
 
-	Entity *b, *prev;
-	
-	prev = &stage.bulletHead;
-	
-	for (b = stage.bulletHead.next ; b != NULL ; b = b->next)
-	{
-		b->x += b->dx;
-		b->y += b->dy;
-		
-		if (bulletHitBlock(b) || b->x < -b->w || b->y < -b->h || b->x > SCREEN_WIDTH || b->y > SCREEN_HEIGHT)
-		{
-			if (b == stage.bulletTail)
-			{
-				stage.bulletTail = prev;
-			}
-			
-			prev->next = b->next;
-			free(b);
-			b = prev;
-		}
-		
-		prev = b;
-	}
-
-}*/
 
 static void doGetItem(void)//playser get item
 {
@@ -574,11 +551,11 @@ static void doGetItem(void)//playser get item
 		if(block->health ==0) 
 		{
 			//have to fix
-			if (collision(block->item.x, block->item.y, block->item.w, block->item.h, player->x, player->y, player->w, player->h))
+			if (collision(block->x, block->y, block->w, block->h, player->x, player->y, player->w, player->h))
 			{
 				
-				block->item.health =0;
-				//statusControl(block);
+				//block->item.health =0;
+				statusControl(block);
 		
 			}
 		}
@@ -588,42 +565,43 @@ static void doGetItem(void)//playser get item
 static void clipPlayerFromBox(void) // must be debugging
 {
 	Entity *block;
+	updateSpeed = PLAYER_SPEED + (0.5)*stage.status1.speed;
+
 	for (block = stage.blockHead.next ; block != NULL ; block = block->next)
 	{
-		//block colmn clip
-		if (player->x > block->x && player->x <(block->x+block->w))
+		if(collision(block->x, block->y, block->w, block->h, player->x, player->y+(player->h/3), player->w, player->h/3))
 		{
+			player->dx = player->dy = 0;
 			
-			if (player->y > block->y)
+			if (app.keyboard[SDL_SCANCODE_UP])
 			{
-				player->y = block->y;
+				player->dy = updateSpeed;
+
 			}
 			
-			if (player->y < (block->y+block->h))
+			if (app.keyboard[SDL_SCANCODE_DOWN])
 			{
-				player->y =(block->y+block->h);
+				player->dy = -updateSpeed;
+
 			}
-		
+			if (app.keyboard[SDL_SCANCODE_LEFT])
+			{
+				player->dx = updateSpeed;
+			}
+			
+			if (app.keyboard[SDL_SCANCODE_RIGHT])
+			{
+				player->dx = -updateSpeed;
+				
+			}
+			
+			
+			player->x += player->dx;
+			player->y += player->dy;
 		}
-		
-		if (player->y < block->y && player->y >(block->y+block->h))
-		{
-			if (player->x < block->x)
-			{
-				player->x = block->x;
-			}
-			
-			if (player->x > (block->x+block->w))
-			{
-				player->x =(block->x+block->w);
-			}
-		}
-		
 	}
-
-
+	
 }
-
 
 static void clipPlayer(void)
 {
@@ -659,14 +637,16 @@ static void draw(void)
 	drawBackground();
 
 	drawmap_background();
-
-	drawPlayer();
 	
 	drawBullets();
 
 	drawItem();
 
 	drawBlock();
+
+	drawPlayer();
+
+	drawHud();
 }
 
 /*
@@ -717,21 +697,6 @@ static void drawItem(void)
 		}
 	}
 
-	/*
-	SDL_Rect rcSprite ;
-	SDL_Rect item = {MAP_X ,MAP_Y,MAP_WIDTH/15 ,MAP_HEIGHT/15};
-	static int i=0;
-	int player_idx = 0;
-	rcSprite.x =MAP_WIDTH/15*i;
-	rcSprite.y =MAP_Y;
-	
-	rcSprite.w = 2*MAP_WIDTH/15;
-	rcSprite.h = MAP_HEIGHT/15;
-	
-	if(i==0) i=1;
-	if(i==1) i=0;
-	SDL_BlitSurface(app.player_surface, &rcSprite, app.window_surface, NULL);
-	*/
 }
 
 
@@ -757,34 +722,6 @@ static void drawPlayer(void)
 		}
 	}
 
-	//blit(player->texture ,player->x , player->y);
-	
-	
-	/*static int step = 0;
-	
-	
-	SDL_Rect dst,src;
-	
-	dst.x = player->x;
-	dst.y = player->y;
-
-	SDL_QueryTexture(player->texture, NULL, NULL, &src.w, &src.h);
-
-	dst.w=src.w/7;
-	dst.h=src.h;
-	src.x=(src.w/7)*step;
-	src.y = 0;
-	src.w=src.w/7;
-	
-	SDL_RenderCopy(app.renderer, player->texture, &src, &dst);
-
-	if(--enemySpawnTimer <= 0)
-	{
-		step = step<5 ? step+1 : 0;
-
-		enemySpawnTimer = 5;
-
-	}*/
 }
 
 static void drawBullets(void)
@@ -815,6 +752,7 @@ static void drawBackground(void)
 		dest.h = SCREEN_HEIGHT;
 		
 		SDL_RenderCopy(app.renderer, background, NULL, &dest);
+
 	}
 }
 
@@ -835,17 +773,29 @@ static void drawmap_background(void)
 }
 
 
+static void drawHud(void)
+{
+	static int counter = 0;
+	static int min, sec;
+	min = stage.time/60;
+	sec = stage.time %60;
+	drawText(922, 95, 255, 255, 255, TEXT_LEFT, "%d :", min );
+	drawText(980, 95, 255, 255, 255, TEXT_LEFT, "%d", sec);
 
-//checking pixel
-/*
-void EventManagerupdate(){
-    SDL_Event e;
+	if(counter >FPS)
+	{
+		stage.time--;
+		counter =0 ;
+		//printf("%d %d %d\n",stage.status1.speed ,stage.status1.bombPower ,stage.stauts1.bombNum );
+	} 
+	counter ++;
+}
+
+static void drawDraw(void)
+{
 	
-		if(!e.button.clicks){
-			printf("x : %d y: %d",e.button.x ,e.button.y);
-			//mousePress(e.button);
-			e.button.clicks=0;
-		}
-        
-    
-}*/
+	drawText(422, 395, 255, 255, 255, TEXT_LEFT, "DRAW");
+	
+
+}
+

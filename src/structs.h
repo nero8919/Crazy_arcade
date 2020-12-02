@@ -59,19 +59,12 @@ struct Entity {
 	float dy;
 	int health;
 	int reload;
-	int side;
 	int direction;
 	Item item;
 	SDL_Texture *texture;
 	Entity *next;
 };
 
-typedef struct {
-	Entity fighterHead, *fighterTail;
-	Entity bulletHead, *bulletTail;
-	Entity pointsHead, *pointsTail;
-	Entity blockHead , *blockTail;
-} Stage;
 
 typedef struct {
 
@@ -81,4 +74,14 @@ typedef struct {
 
 
 } CharictarStatus;
+
+typedef struct {
+	Entity fighterHead, *fighterTail;
+	Entity bulletHead, *bulletTail;
+	Entity pointsHead, *pointsTail;
+	Entity blockHead , *blockTail;
+	CharictarStatus status1, stauts2;
+	int time;
+} Stage;
+
 

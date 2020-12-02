@@ -13,5 +13,4 @@ made by choiJUngHyun
 #include "common.h"
 
 
-
-CharictarStatus status ;
+extern Stage stage;

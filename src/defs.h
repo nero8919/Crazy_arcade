@@ -22,7 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
 #define SIDE_PLAYER 0
-
+#define MAX_LINE_LENGTH 1024
 
 #define SCALE 1.0
 
@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define START_LOGO_X 380*SCALE
 #define START_LOGO_Y 30*SCALE
 
-#define PLAYER_SPEED          4
+#define PLAYER_SPEED          2
 #define PLAYER_BULLET_SPEED   20
 
 #define MAX_KEYBOARD_KEYS 350
@@ -51,7 +51,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define characterPNGsize 7
 
-
+#define GLYPH_HEIGHT 28
+#define GLYPH_WIDTH  18
 
 enum BoxNumber {
     BOXTYPE1 ,
@@ -77,4 +78,11 @@ enum Sequence{
     INIT,
     HOLD=99
 
+};
+
+enum
+{
+	TEXT_LEFT,
+	TEXT_CENTER,
+	TEXT_RIGHT
 };

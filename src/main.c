@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
 	memset(&app, 0, sizeof(App));
 	
 	initSDL();
+
+	initFonts();
 	
 	atexit(cleanup);
 	

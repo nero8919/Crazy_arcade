@@ -30,5 +30,10 @@ extern void drawText(int x, int y, int r, int g, int b, int align, char *format,
 //extern void initHighscores(void);
 extern void initStage(void);
 extern SDL_Texture *loadTexture(char *filename);
+extern int MAPNUMBER;
+extern int mouseButton(int x, int y ,int w, int h);
+extern void loadMusic(char *filename);
+extern void playMusic(int loop);
 
 extern App app;
+extern Stage stage;

@@ -10,7 +10,8 @@ _OBJS += draw.o util.o
 _OBJS += init.o input.o
 _OBJS += main.o map.o
 _OBJS += stage.o title.o
-_OBJS += playerstatus.o
+_OBJS += playerstatus.o text.o
+_OBJS += sound.o
 
 
 OBJS = $(patsubst %,$(OUT)/%,$(_OBJS))

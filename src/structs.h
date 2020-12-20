@@ -35,7 +35,7 @@ typedef struct {
   	SDL_Surface* player_surface;
 
 	int keyboard[MAX_KEYBOARD_KEYS];
-	int mouse;	//mouse up 1 down 0 
+	int mouse[MOUSE_INPUT];	//  	[0] up:0 down:1 , [1] mouse.x [2]mouse.y  
 	
 } App;
 
@@ -49,6 +49,15 @@ typedef struct{
 	SDL_Texture *texture;
 } Item;
 
+typedef struct {
+
+	int speed; 
+	int bombNum;
+	int bombPower;
+
+
+} CharictarStatus;
+
 struct Entity {
 	
 	float x;
@@ -59,26 +68,25 @@ struct Entity {
 	float dy;
 	int health;
 	int reload;
-	int side;
 	int direction;
+	float updatespeed;
+	CharictarStatus *status;
 	Item item;
 	SDL_Texture *texture;
 	Entity *next;
 };
 
+
+
 typedef struct {
 	Entity fighterHead, *fighterTail;
+	Entity fighter2Head, *fighter2Tail;
 	Entity bulletHead, *bulletTail;
 	Entity pointsHead, *pointsTail;
 	Entity blockHead , *blockTail;
+	Entity waterHead, *waterTail;
+	int time;
+	int stageNumber;
 } Stage;
 
-typedef struct {
-
-	int speed; 
-	int bombNum;
-	int bombPower;
-
-
-} CharictarStatus;
 

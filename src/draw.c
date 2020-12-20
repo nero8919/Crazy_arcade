@@ -89,3 +89,27 @@ void moveani(SDL_Texture *texture, int x, int y ,int step,int pngSize)
 
 	
 }
+
+
+void waterMoveAni(SDL_Texture *texture, int x, int y ,int step,int pngSize)
+{
+	
+	SDL_Rect dst,src;
+	
+	dst.x = x;
+	dst.y = y;
+
+	SDL_QueryTexture(texture, NULL, NULL, NULL, NULL);
+
+	src.w = MAP_WIDTH/15*pngSize;
+	src.h = MAP_HEIGHT/15;
+	dst.w=src.w/pngSize;
+	dst.h=src.h;
+	src.x=(src.w/pngSize)*step;
+	src.y = 0;
+	src.w=src.w/pngSize;
+	
+	SDL_RenderCopy(app.renderer, texture, &src, &dst);
+
+	
+}

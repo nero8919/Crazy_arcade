@@ -23,8 +23,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "string.h"
 #include "math.h"
 #include "ctype.h"
-
+#include "time.h"
 #include "SDL2/SDL.h"
 
 #include "defs.h"
 #include "structs.h"
+#include "assert.h"

@@ -23,30 +23,25 @@ it almost used with item
 
 
 
-void statusControl(Entity *block  )
+void statusControl(Entity *block ,Entity *player )
 {
     block->item.health =0;
-
+    
     switch(block->item.itemType)
     {
         case ITEMSKATE:
-            if(status.speed<10)    status.speed += 1;
+            if(player->status->speed<10)   player->status->speed += 1;
             break;
         case ITEMPOTION:
-            if(status.bombPower<10) status.bombPower +=1;
+            if(player->status->bombPower<7) player->status->bombPower +=1;
             break;
         case ITEMBALLON:
-            if(status.bombNum <10)  status.bombNum += 1;
+            if(player->status->bombNum <7)  player->status->bombNum += 1;
             break;
         case ITEMPOWERMAX:
-            status.bombPower = 10;
-
-
-
+            player->status->bombPower = 7;
 
     }
-
-
 
 
 }

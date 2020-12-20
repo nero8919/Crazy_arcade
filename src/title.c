@@ -16,7 +16,10 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+<<<<<<< HEAD
 using shooter title.c and modified
+=======
+>>>>>>> master
 */
 
 #include "title.h"
@@ -25,6 +28,7 @@ static void logic(void);
 static void draw(void);
 //static void drawLogo(void);
 static void drawStartScene(void);
+<<<<<<< HEAD
 static int checkingbox(SDL_Texture *texture ,SDL_MouseButtonEvent *event);
 static void mapChoiceTitle(void);
 static void initLobby(void);
@@ -32,12 +36,18 @@ static void drawLobbyScene(void);
 static void doStartLogo(void);
 static void mapChoiceButton(void);
 static void mapCheck(void);
+=======
+static void drawStartLogo(void);
+static int checkingbox(SDL_Texture *texture ,SDL_MouseButtonEvent *event);
+
+>>>>>>> master
 
 
 //static SDL_Texture *sdl2Texture;
 static SDL_Texture *startSceneBg;
 static SDL_Texture *startLogo;
 static SDL_Texture *startLogoClick;
+<<<<<<< HEAD
 static SDL_Texture *lobbyScene;
 static SDL_Texture *map1Demo;
 static SDL_Texture *map2Demo;
@@ -58,30 +68,46 @@ static int mapMenu=0;
 											init Title
 ----------------------------------------------------------------------------------------*/
 
+=======
+static int reveal = 0;
+static int timeout;
+static int startSceneBgX;
+static int click; 
+
+
+>>>>>>> master
 void initTitle(void)
 {
 	app.delegate.logic = logic;
 	app.delegate.draw = draw;
+<<<<<<< HEAD
 
 	loadMusic("music/mainstart.ogg");
 	
 	playMusic(1);
+=======
+>>>>>>> master
 	
 	memset(app.keyboard, 0, sizeof(int) * MAX_KEYBOARD_KEYS);
 	
 	startLogo = loadTexture("gfx/gamestart.png");
 	startLogoClick = loadTexture("gfx/clickgamestart.png");
 	startSceneBg = loadTexture("gfx/start_scene_bg.png");
+<<<<<<< HEAD
 	lobbyScene = loadTexture("gfx/lobby_scene_bg.png");
 	map1Demo = loadTexture("gfx/map1Demo.png");
 	map2Demo = loadTexture("gfx/map2Demo.png");
 
+=======
+	
+>>>>>>> master
 	timeout = FPS * 5;
 }
 
 
 static void logic(void)
 {
+<<<<<<< HEAD
 	doStartLogo();
 }
 	
@@ -138,10 +164,36 @@ static void initLobby(void)
 ----------------------------------------------------------------------------------------*/
 
 
+=======
+	/*
+	if (reveal < SCREEN_HEIGHT)
+	{
+		reveal++;
+	}
+	
+	if (--timeout <= 0)
+	{
+		initHighscores();
+	}
+	*/
+	if(app.mouse){
+		//will be give a click effects
+		click =1;
+		
+	}
+	if(app.mouse ==0 && click ==1){
+		
+		initStage();
+	}
+}
+
+
+>>>>>>> master
 static void draw(void)
 {
 	drawStartScene();
 
+<<<<<<< HEAD
 	if(checkingLobby) drawLobbyScene();
 	
 	if(mapMenu)
@@ -153,6 +205,21 @@ static void draw(void)
 
 	}
 
+=======
+	drawStartLogo();
+	/*
+	drawBackground();
+	
+	drawStarfield();
+	
+	drawLogo();
+	
+	if (timeout % 40 < 20)
+	{
+		drawText(SCREEN_WIDTH / 2, 600, 255, 255, 255, TEXT_CENTER, "PRESS FIRE TO PLAY!");
+	}
+*/
+>>>>>>> master
 }
 
 static void drawStartScene(void)
@@ -172,6 +239,7 @@ static void drawStartScene(void)
 }
 
 
+<<<<<<< HEAD
 
 static void drawLobbyScene(void)
 {
@@ -237,3 +305,39 @@ static void mapChoiceButton(void)
 	}
 
 }
+=======
+static void drawStartLogo(void)
+{
+	SDL_Rect r;
+	
+	r.x = 0;
+	r.y = 0;
+
+	SDL_QueryTexture(startLogo, NULL, NULL, (&r.w), &r.h);
+	
+	r.w *= SCALE;
+	r.h *= SCALE; 
+	
+	blitRect(startLogo, &r, START_LOGO_X ,START_LOGO_Y);
+	
+}
+
+/*
+keeping (making a box click)
+static int checkingbox(SDL_Texture *texture ,SDL_MouseButtonEvent *event)
+{
+	SDL_Rect r;
+
+
+	SDL_QueryTexture(texture, NULL, NULL, (&r.w), &r.h);
+
+	if(event->x <(START_LOGO_X+r.w) && event->x > (START_LOGO_X) && event->y < START_LOGO_Y && event->y > (START_LOGO_Y + r.h){
+
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+*/
+>>>>>>> master

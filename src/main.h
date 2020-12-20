@@ -27,7 +27,11 @@ extern void prepareScene(void);
 extern void presentScene(void);
 extern void doInput(void);
 extern void initTitle(void);
+<<<<<<< HEAD
 extern void initFonts(void);
 extern void initSounds(void);
+=======
+
+>>>>>>> master
 App app;
 Stage stage;

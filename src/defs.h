@@ -22,6 +22,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
 #define SIDE_PLAYER 0
+<<<<<<< HEAD
 #define MAX_LINE_LENGTH 1024
 
 #define SCALE 1.0
@@ -41,12 +42,33 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define START_LOGO_Y 30
 
 #define PLAYER_SPEED          2
+=======
+
+
+#define SCALE 1.0
+
+
+#define SCREEN_WIDTH   1040*SCALE
+#define SCREEN_HEIGHT  780 *SCALE
+
+#define MAP_WIDTH   780*SCALE
+#define MAP_HEIGHT  680*SCALE
+#define MAP_X   26*SCALE
+#define MAP_Y   53*SCALE
+
+
+#define START_LOGO_X 380*SCALE
+#define START_LOGO_Y 30*SCALE
+
+#define PLAYER_SPEED          4
+>>>>>>> master
 #define PLAYER_BULLET_SPEED   20
 
 #define MAX_KEYBOARD_KEYS 350
 
 #define FPS 60
 
+<<<<<<< HEAD
 #define mapTileX 15
 #define mapTileY 15
 
@@ -142,3 +164,5 @@ enum{
 	RIGHTLINE,
 	CENTERLINE
 };
+=======
+>>>>>>> master

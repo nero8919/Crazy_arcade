@@ -40,14 +40,9 @@ void doMouseDown(SDL_MouseButtonEvent *event)
 {
 	if (event->button == SDL_BUTTON_LEFT)
 	{
-<<<<<<< HEAD
 		app.mouse[mouseUPDOWN] = 1;
 		app.mouse[mouse_X] = event->x;
 		app.mouse[mouse_Y] = event->y;
-=======
-		app.mouse = 1;
-		
->>>>>>> master
 	}
 }
 
@@ -55,11 +50,7 @@ void doMouseUp(SDL_MouseButtonEvent *event)
 {
 	if (event->button == SDL_BUTTON_LEFT)
 	{
-<<<<<<< HEAD
 		app.mouse[mouseUPDOWN] = 0;
-=======
-		app.mouse = 0;
->>>>>>> master
 
 	}
 }
@@ -94,11 +85,7 @@ void doInput(void)
 			case SDL_MOUSEBUTTONUP:
 				doMouseUp(&event.button);
 				break;
-<<<<<<< HEAD
 				
-=======
-
->>>>>>> master
 			default:
 				break;
 		}

@@ -16,33 +16,25 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-<<<<<<< HEAD
 Transformed by LeeJaewon ,choiJUngHyun
 
 UPdate log :final
 				
-=======
-UPdate log :make block and 
->>>>>>> master
 
 
 */
 
 #include "stage.h"
-<<<<<<< HEAD
 #define Debug
 
 #define bombexplosionTimer (FPS*3)
 
 
 int MAPNUMBER=1;
-=======
->>>>>>> master
 
 static void logic(void);
 static void draw(void);
 static void initPlayer(void);
-<<<<<<< HEAD
 static void initPlayer2(void);
 static void fireBullet(Entity *player);
 static void doPlayer(void);
@@ -50,12 +42,6 @@ static void doPlayer2(void);
 static void doBullets(Entity *player);
 static void drawPlayer(void);
 static void drawPlayer2(void);
-=======
-static void fireBullet(void);
-static void doPlayer(void);
-static void doBullets(void);
-static void drawPlayer(void);
->>>>>>> master
 static void drawBullets(void);
 static void drawBackground(void);
 static void drawmap_background(void);
@@ -64,7 +50,6 @@ static void doBlock(void);
 static void doItem(Entity *block);
 static void drawItem(void);
 static void initItem(void);
-<<<<<<< HEAD
 static void drawBlock(void);
 static int bulletHitBlock(Entity *water);
 static int waterHitBomb(Entity *water);
@@ -95,20 +80,11 @@ static void restart(void);
 
 
 //static int bulletHitItem(Entity *b);
-=======
-static void initBlock(void);
-static void drawBlock(void);
-static int bulletHitBlock(Entity *b);
-static void spawnBlock(void);
-static void doGetItem(void);
-
->>>>>>> master
 
 static void EventManagerupdate();
 
 
 static Entity *player;
-<<<<<<< HEAD
 static Entity *player2;
 static SDL_Texture *bulletTexture;
 static SDL_Texture *background;
@@ -141,24 +117,10 @@ static SDL_Texture *p1Texture;
 static SDL_Texture *p2Texture;
 
 
-=======
-static SDL_Texture *bulletTexture;
-static SDL_Texture *background;
-static SDL_Texture *map_background;
-static SDL_Texture *bulletTexture;
-static SDL_Texture *itemSkate;
-static SDL_Texture *itemPotion;
-static SDL_Texture *itemBallon;
-static SDL_Texture *itemPowerMax;
-
-static SDL_Texture *block1;
-//static Item *item; 
->>>>>>> master
 
 static int itemX;
 static int backgroundX;
 static int map_backgroundX;
-<<<<<<< HEAD
 
 static int enemySpawnTimer =0;
 static int enemySpawnTimer2 =0;
@@ -191,15 +153,6 @@ void initStage(void)
 	
 	app.delegate.logic = logic;
 	app.delegate.draw = draw;
-=======
-static int enemySpawnTimer;
-
-void initStage(void)
-{
-	app.delegate.logic = logic;
-	app.delegate.draw = draw;
-	
->>>>>>> master
 	memset(app.keyboard, 0, sizeof(int) * MAX_KEYBOARD_KEYS);
 
 	
@@ -207,7 +160,6 @@ void initStage(void)
 	
 	initPlayer();
 
-<<<<<<< HEAD
 	initPlayer2();
 
 	initItem();
@@ -268,52 +220,6 @@ void initStage(void)
 }
 
 
-=======
-	initItem();
-
-	initBlock();
-
-	bulletTexture = loadTexture("gfx/playerBullet.png");
-	map_background = loadTexture("gfx/mapbg1.png");
-	background = loadTexture("gfx/play_bg.png");
-	bulletTexture = loadTexture("gfx/playerBullet.png");
-	
-	enemySpawnTimer =0;
-
-}
-
-static void initBlock(void)
-{
-
-	block1 = loadTexture("item/block_1.png");
-
-}
-
-
-static void initItem(void)
-{
-
-
-	itemSkate = loadTexture("item/skate.png");
-	itemPotion = loadTexture("item/potion.png");
-	itemBallon = loadTexture("item/ballon.png");
-	itemPowerMax = loadTexture("item/powerMax.png");
-	 
-	/*
-	app.player_surface = SDL_LoadBMP("item/powerMax.bmp");
-	SDL_SetColorKey(app.player_surface, 1, SDL_MapRGB(app.player_surface->format, 255, 0, 255));
-    app.window_surface = SDL_GetWindowSurface(app.window);
-
-	if (app.player_surface ==NULL)
-	{
-		printf("unable to loac screen: %s\n", SDL_GetError);
-		return 1;
-	}
-	*/
-
-}
-
->>>>>>> master
 static void resetStage(void)
 {
 	Entity *e;
@@ -324,15 +230,12 @@ static void resetStage(void)
 		stage.fighterHead.next = e->next;
 		free(e);
 	}
-<<<<<<< HEAD
 	while (stage.fighter2Head.next)
 	{
 		e = stage.fighter2Head.next;
 		stage.fighter2Head.next = e->next;
 		free(e);
 	}
-=======
->>>>>>> master
 	
 	while (stage.bulletHead.next)
 	{
@@ -356,7 +259,6 @@ static void resetStage(void)
 		free(e);
 	}
 	
-<<<<<<< HEAD
 	
 	memset(&stage, 0, sizeof(Stage));
 	stage.fighterTail = &stage.fighterHead;
@@ -614,48 +516,10 @@ static void quitButton(void)
 /*---------------------------------------------------------------------------------------
 								remove linked list
 ----------------------------------------------------------------------------------------*/
-=======
-	memset(&stage, 0, sizeof(Stage));
-	stage.fighterTail = &stage.fighterHead;
-	stage.bulletTail = &stage.bulletHead;
-	stage.blockTail = &stage.blockHead;
-}
-
-
-static void initPlayer()
-{
-	player = malloc(sizeof(Entity));
-	memset(player, 0, sizeof(Entity));
-	stage.fighterTail->next = player;
-	stage.fighterTail = player;
-	
-	player->x = 100;
-	player->y = 100;
-	player->texture = loadTexture("gfx/player.png");
-	SDL_QueryTexture(player->texture, NULL, NULL, &player->w, &player->h);
-}
-
-
-
-static void logic(void)
-{
-	doPlayer();
-	
-	doBullets();
-
-	spawnBlock();
-
-	//doBlock();
-
-	doGetItem();
-}
-
->>>>>>> master
 static void doBlock(void)
 {
 	Entity *block, *prev;
 		
-<<<<<<< HEAD
 	prev = &stage.blockHead;
 	
 	for (block = stage.blockHead.next ; block != NULL ; block = block->next)
@@ -702,53 +566,10 @@ static void doPlayer(void)
 //timer start
 	
 
-=======
-		prev = &stage.blockHead;
-		
-		for (block = stage.blockHead.next ; block != NULL ; block = block->next)
-		{
-			
-			
-			/*error zone : idont know why this is happening
-					to make this 
-			if (block == player)
-			{
-				player = NULL;
-			}*/
-			if( block->item.health==0 && block->health ==0 )
-			{ 	
-				if (block == player)
-				{
-				player = NULL;
-				}
-				
-				if (block == stage.blockTail)
-				{
-					stage.blockTail = prev;
-				}
-				
-				prev->next = block->next;
-				free(block);
-				block = prev;
-			}
-			
-			prev = block;
-		}
-
-
-}
-
-
-static void doPlayer(void)
-{
-	player->dx = player->dy = 0;
-	
->>>>>>> master
 	if (player->reload > 0)
 	{
 		player->reload--;
 	}
-<<<<<<< HEAD
 //key input	
 	if (app.keyboard[SDL_SCANCODE_UP])
 	{
@@ -758,45 +579,30 @@ static void doPlayer(void)
 			player->texture = playerupTexture;
 			player->direction =UP;
 		}
-=======
-	
-	if (app.keyboard[SDL_SCANCODE_UP])
-	{
-		player->dy = -PLAYER_SPEED;
->>>>>>> master
 	}
 	
 	if (app.keyboard[SDL_SCANCODE_DOWN])
 	{
-<<<<<<< HEAD
 		player->dy = player->updatespeed;
 		if(player->direction !=DOWN) 
 		{
 			player->texture = playerdownTexture;
 			player->direction =DOWN;
 		}	
-=======
-		player->dy = PLAYER_SPEED;
->>>>>>> master
 	}
 	
 	if (app.keyboard[SDL_SCANCODE_LEFT])
 	{
-<<<<<<< HEAD
 		player->dx = -player->updatespeed;
 		if(player->direction !=LEFT)
 		{
 			player->texture = playerleftTexture;
 			player->direction =LEFT;
 		}	
-=======
-		player->dx = -PLAYER_SPEED;
->>>>>>> master
 	}
 	
 	if (app.keyboard[SDL_SCANCODE_RIGHT])
 	{
-<<<<<<< HEAD
 		player->dx = player->updatespeed;
 		if(player->direction !=RIGHT) 
 		{
@@ -828,21 +634,10 @@ static void doPlayer(void)
 		}
 	}
 
-=======
-		player->dx = PLAYER_SPEED;
-	}
-	
-	if (app.keyboard[SDL_SCANCODE_LCTRL] && player->reload == 0)
-	{
-		fireBullet();
-	}
-	
->>>>>>> master
 	player->x += player->dx;
 	player->y += player->dy;
 }
 
-<<<<<<< HEAD
 
 
 static void doPlayer2(void)
@@ -1208,160 +1003,17 @@ static void doBullets(Entity *player)
 	Entity *b, *prev;
 	int updownleftright,waterlinePower;
 
-=======
-static void fireBullet(void)
-{
-	Entity *bullet;
-	
-	bullet = malloc(sizeof(Entity));
-	memset(bullet, 0, sizeof(Entity));
-	stage.bulletTail->next = bullet;
-	stage.bulletTail = bullet;
-	
-	bullet->x = player->x;
-	bullet->y = player->y;
-	bullet->dx = PLAYER_BULLET_SPEED;
-	bullet->health = 1;
-	bullet->side = SIDE_PLAYER;
-
-	bullet->texture = bulletTexture;
-	SDL_QueryTexture(bullet->texture, NULL, NULL, &bullet->w, &bullet->h);
-	
-	bullet->y += (player->h / 2) - (bullet->h / 2);
-	
-	player->reload = 4;
-}
-	
-static void doBullets(void)
-{
-	Entity *b, *prev;
-	
 	prev = &stage.bulletHead;
 	
 	for (b = stage.bulletHead.next ; b != NULL ; b = b->next)
 	{
-		b->x += b->dx;
-		b->y += b->dy;
-		
-		if (bulletHitBlock(b) || b->x < -b->w || b->y < -b->h || b->x > SCREEN_WIDTH || b->y > SCREEN_HEIGHT)
-		{
-			if (b == stage.bulletTail)
-			{
-				stage.bulletTail = prev;
-			}
-			
-			prev->next = b->next;
-			free(b);
-			b = prev;
-		}
-		
-		prev = b;
-	}
-
-	
-}
-
-
-
-static int bulletHitBlock(Entity *b)
-{
-	Entity *block;
-	
-	for (block = stage.blockHead.next ; block != NULL ; block = block->next)
-	{
-		if ( collision(b->x, b->y, b->w, b->h, block->x, block->y, block->w, block->h))
-		{
-			
-			b->health = 0;
-			block->health = 0;
-			
-
-			if (block == player)
-			{
-
-			}
-			else{
-			
-			doItem(block);
-			//addPointsPod(e->x + e->w / 2, e->y + e->h / 2);			
-			}
-			return 1;
-			
-		}
-
-	}
-	return 0;
-}
-
-
-static void spawnBlock(void)
-{
-	Entity *block;
-
-	if (--enemySpawnTimer <= 0)
-	{
-		block = malloc(sizeof(Entity));
-		memset(block, 0, sizeof(Entity));
-		stage.blockTail->next = block;
-		stage.blockTail= block;
-
-
-
-		block->x = MAP_X+(MAP_WIDTH/15)*(rand()%15);
-		block->y = MAP_Y+(MAP_HEIGHT/15)*(rand()%15);
-		block->w =MAP_WIDTH/15;
-		block->h =MAP_HEIGHT/15;
-		block->texture = block1;
-		SDL_QueryTexture(block->texture, NULL, NULL, &block->w, &block->h);
-
-
-		block->side = 1;
-		block->health = 1;
-	
-		enemySpawnTimer= 30 + (rand() % FPS);
-
-		
-	}
-
-
-}
-	
-static void doItem(Entity *block)
-{
-	block->item.x =block->x;
-	block->item.y =block->y;
-	block->item.texture = itemPowerMax;
-	block->item.w =MAP_WIDTH/15;
-	block->item.h =MAP_HEIGHT/15;
-	block->item.health = 1;
-	SDL_QueryTexture(block->item.texture, NULL, NULL, &block->w, &block->h);
-}
-/*
-static void doItem(void)
-{
-
-	Entity *b, *prev;
-	
->>>>>>> master
-	prev = &stage.bulletHead;
-	
-	for (b = stage.bulletHead.next ; b != NULL ; b = b->next)
-	{
-<<<<<<< HEAD
 
 		if(--b->health<=0)
-=======
-		b->x += b->dx;
-		b->y += b->dy;
-		
-		if (bulletHitBlock(b) || b->x < -b->w || b->y < -b->h || b->x > SCREEN_WIDTH || b->y > SCREEN_HEIGHT)
->>>>>>> master
 		{
 			if (b == stage.bulletTail)
 			{
 				stage.bulletTail = prev;
 			}
-<<<<<<< HEAD
 
 			firewaterlinecenter(player,b);
 			
@@ -1374,14 +1026,10 @@ static void doItem(void)
 					
 				}
 			}
-=======
-			
->>>>>>> master
 			prev->next = b->next;
 			free(b);
 			b = prev;
 		}
-<<<<<<< HEAD
 		updownleftright =0;
 		waterlinePower =1;
 		prev = b;
@@ -1570,31 +1218,6 @@ static void clipPlayer(Entity *player)
 *****************************************************************************************
 ----------------------------------------------------------------------------------------*/
 
-=======
-		
-		prev = b;
-	}
-
-}*/
-
-static void doGetItem(void)
-{
-	Entity *block;
-	for (block = stage.blockHead.next ; block != NULL ; block = block->next)
-	{
-		if(block->health ==0)
-		{
-			if (player != NULL && collision(block->x, block->y, block->w, block->h, player->x, player->y, player->w, player->h))
-			{
-				
-				block->item.health = 0;
-			}
-		}
-	}
-}
-
-
->>>>>>> master
 static void draw(void)
 {
 	
@@ -1602,7 +1225,6 @@ static void draw(void)
 
 	drawmap_background();
 
-<<<<<<< HEAD
 	drawWaterline();
 	
 	drawBlock();
@@ -1632,34 +1254,10 @@ static void draw(void)
 /*---------------------------------------------------------------------------------------
 								block, item , draw
 ----------------------------------------------------------------------------------------*/
-=======
-	drawPlayer();
-	
-	drawBullets();
-
-	drawItem();
-
-	drawBlock();
-}
-/*
-static void drawBlock(void)
-{
-	SDL_Rect block;
-
-	block.x =MAP_X;
-	block.y =MAP_Y;
-	block.w =MAP_WIDTH/15;
-	block.h =MAP_HEIGHT/15;
-
-	SDL_RenderCopy(app.renderer, block1, NULL, &block);
-
-}*/
->>>>>>> master
 
 static void drawBlock(void)
 {
 	Entity *block;
-<<<<<<< HEAD
 	SDL_Rect *rect;
 
 	rect = malloc(sizeof(SDL_Rect));
@@ -1676,23 +1274,11 @@ static void drawBlock(void)
 			//blit(block->texture , block->x, block-> y);
 		}
 	}
-=======
-
-	
-		for (block = stage.blockHead.next ; block != NULL ; block = block->next)
-		{
-			if(block->health !=0){
-				blit(block->texture, block->x, block->y);
-			}
-		}
-
->>>>>>> master
 }
 
 static void drawItem(void)
 {
 	Entity *block;	//use block entity
-<<<<<<< HEAD
 	SDL_Rect *rect;
 
 	rect = malloc(sizeof(SDL_Rect));
@@ -1718,37 +1304,6 @@ static void drawItem(void)
 /*---------------------------------------------------------------------------------------
 								bomb , waterline draw
 ----------------------------------------------------------------------------------------*/
-=======
-
-	for (block = stage.blockHead.next ; block != NULL ; block = block->next)
-	{	if(block->item.health !=0){
-			blit(block->item.texture , block->x , block->y);
-	}
-	}
-
-	/*
-	SDL_Rect rcSprite ;
-	SDL_Rect item = {MAP_X ,MAP_Y,MAP_WIDTH/15 ,MAP_HEIGHT/15};
-	static int i=0;
-	int player_idx = 0;
-	rcSprite.x =MAP_WIDTH/15*i;
-	rcSprite.y =MAP_Y;
-	
-	rcSprite.w = 2*MAP_WIDTH/15;
-	rcSprite.h = MAP_HEIGHT/15;
-	
-	if(i==0) i=1;
-	if(i==1) i=0;
-	SDL_BlitSurface(app.player_surface, &rcSprite, app.window_surface, NULL);
-	*/
-}
-
-
-static void drawPlayer(void)
-{
-	blit(player->texture, player->x, player->y);
-}
->>>>>>> master
 
 static void drawBullets(void)
 {
@@ -1756,7 +1311,6 @@ static void drawBullets(void)
 	
 	for (b = stage.bulletHead.next ; b != NULL ; b = b->next)
 	{
-<<<<<<< HEAD
 		blit(b->texture, b->x, b->y);
 
 	}
@@ -1863,17 +1417,6 @@ static void drawPlayer2(void)
 								draw background
 ----------------------------------------------------------------------------------------*/
 
-=======
-		
-	
-		blit(b->texture, b->x, b->y);
-		
-
-	}
-}
-
-
->>>>>>> master
 static void drawBackground(void)
 {
 	SDL_Rect dest;
@@ -1887,10 +1430,6 @@ static void drawBackground(void)
 		dest.h = SCREEN_HEIGHT;
 		
 		SDL_RenderCopy(app.renderer, background, NULL, &dest);
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 	}
 }
 
@@ -1911,7 +1450,6 @@ static void drawmap_background(void)
 }
 
 
-<<<<<<< HEAD
 /*---------------------------------------------------------------------------------------
 									draw Timer
 ----------------------------------------------------------------------------------------*/
@@ -2126,19 +1664,3 @@ static void restart(void)
 	initTitle();
 
 }
-=======
-
-//checking pixel
-/*
-void EventManagerupdate(){
-    SDL_Event e;
-	
-		if(!e.button.clicks){
-			printf("x : %d y: %d",e.button.x ,e.button.y);
-			//mousePress(e.button);
-			e.button.clicks=0;
-		}
-        
-    
-}*/
->>>>>>> master

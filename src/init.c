@@ -34,7 +34,6 @@ void initSDL(void)
 		exit(1);
 	}
 
-<<<<<<< HEAD
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
     {
         printf("Couldn't initialize SDL Mixer\n");
@@ -43,8 +42,6 @@ void initSDL(void)
 
     Mix_AllocateChannels(MAX_SND_CHANNELS);
 
-=======
->>>>>>> master
 	app.window = SDL_CreateWindow("Shooter 05", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
 
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
